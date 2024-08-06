@@ -23,7 +23,7 @@ def selector(algo, func_details, popSize, Iter):
     elif algo == "AGWO":
         x = agwo.AGWO(getattr(benchmarks, function_name), lb, ub, dim, popSize, Iter)
     else:
-        return null
+        return None
     return x
 
 def run(optimizer, objectivefunc, NumOfRuns, params, export_flags):
