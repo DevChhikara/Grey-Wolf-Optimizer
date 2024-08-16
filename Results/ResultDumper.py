@@ -5,6 +5,7 @@ from flask_cors import CORS, cross_origin
 import json
 import numpy as np
 import time
+import pickle
 
 app=Flask(__name__)
 CORS(app)
@@ -14,7 +15,16 @@ def dumpResults():
     data = request.get_json()
     data = json.loads(data)
     # image = np.asarray(data["data"])
-    
+    variant = data["variant"]
+    CEC = data["CEC"]
+    dimension = data["dimension"]
+    pop_size = data["population_size"]
+    value = data["value"]
+    with open(f'/{variant}/{CEC}.dat', "rb") as f:
+        frame = pickle.load(f)
+    # update frame
+    with open(f'', 'rb+') as f:
+        pickle.dump(frame, f)
     print(data)
     res="Result dumped to csv"
     res={"data":res}
