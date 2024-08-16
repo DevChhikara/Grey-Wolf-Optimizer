@@ -13,6 +13,6 @@ Verify results.
 
 Chirag -> MGWO, OBGWO
 
-Kartik -> Orig GWO, AGWO
+Kartik -> Orig GWO (if done do RWGWO), AGWO
 
 Dev -> EEGWO  MELGWO
