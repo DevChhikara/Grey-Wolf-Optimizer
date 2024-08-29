@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from mealpy.optimizer import Optimizer
 from mealpy import FloatVar
-from mealpy.swarm_based.GWO import OriginalGWO
+from mealpy.swarm_based.GWO import RW_GWO
 import sys
 
 original_stdout = sys.stdout
@@ -59,9 +59,11 @@ def final_result(model_name):
                         model = model_name(epoch, pop_size)
                         max_fe = 10000 * dimension
                         term_dict = {"max_fe": max_fe}
-                        best_position, best_fitness = model.solve(
+                        best_position = model.solve(
                             problem_dict
                         )
+                        best_fitness = model.history.list_global_best_fit
+                        # print(best_fitness)
                         run_result = np.append(run_result, best_fitness)
                         print(f"{model.name} => Function: {func_map_key_name}, Dimension: {dimension}, Population Size: {pop_size} :: Iteration: {iter}, Fitness: {best_fitness}",flush=True,)
                         WOAResults[func_map_key_name][dimension][pop_size] = np.mean(run_result)
@@ -78,5 +80,5 @@ def final_result(model_name):
 
 with open("./progress-original.txt", "w") as f:
     # sys.stdout = f
-    final_result(OriginalGWO)
+    final_result(RW_GWO)
     # sys.stdout = original_stdout

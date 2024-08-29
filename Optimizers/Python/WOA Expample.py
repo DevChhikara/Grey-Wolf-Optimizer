@@ -5,6 +5,7 @@ import pandas as pd
 from mealpy.optimizer import Optimizer
 from mealpy.swarm_based.WOA import OriginalWOA
 import sys
+import pickle
 
 original_stdout = sys.stdout
 
@@ -300,7 +301,7 @@ def final_result(model_name):
             for dimension in [10, 30, 50, 100]:
                 func_name = f"opfunu.cec_based.F{func_num}2014(ndim={dimension})"
                 WOAResults[func_map_key_name][dimension] = {}
-                
+
                 for pop_size in [
                     10,
                     20,
@@ -348,12 +349,14 @@ def final_result(model_name):
                         f"=========={model.name} => Function: {func_map_key_name}, Dimension: {dimension}, Population Size: {pop_size} :: Completed: {WOAResults[func_map_key_name][dimension][pop_size]}==========",
                         flush=True,
                     )
-    for key in WOAResults.keys():
-        df = pd.DataFrame(WOAResults[key])
-        directory_path = f"./results/{model.name}"
-        if not os.path.exists(directory_path):
-            os.makedirs(directory_path)
-        df.to_csv(f"{directory_path}/{key}.csv", index=True)
+                    with open("outFile.txt", 'ab+') as outFile:
+                        pickle.dump(WOAResults, outFile)
+    # for key in WOAResults.keys():
+    #     df = pd.DataFrame(WOAResults[key])
+    #     directory_path = f"./results/{model.name}"
+    #     if not os.path.exists(directory_path):
+    #         os.makedirs(directory_path)
+    #     df.to_csv(f"{directory_path}/{key}.csv", index=True)
 
 
 with open("./progress-msdwoa.txt", "w") as f:
